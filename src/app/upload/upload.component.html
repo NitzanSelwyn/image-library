@@ -3,3 +3,18 @@
     <div><button id="snap" (click)="capture()">Snap Photo</button></div>
     <canvas #canvas id="canvas" width="640" height="480"></canvas>
 </div>
+
+<input #imageInput hidden="true" type="file" onclick="this.value=null" (change)="onFileSelected($event)"
+    accept="image/*" />
+<button (click)="imageInput.click()">upload image</button>
+
+<!-- <input (change)="onImagePicked($event)" placeholder="Upload Image" type="file" />
+<button (click)="onImageUpload()">Upload Image</button>
+
+<div *ngIf="imageUrl">
+    Preview Image from AWS
+    <br />
+    <img width="200px" src="https://YOUR S3 BUCKET 
+  NAME.s3.amazonaws.com/{{ 
+  imageUrl }}" />
+</div> -->

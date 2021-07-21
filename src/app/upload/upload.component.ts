@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { UploadService } from './services/upload.service';
 
 @Component({
   selector: 'app-upload',
@@ -13,7 +14,10 @@ export class UploadComponent implements OnInit {
   @ViewChild('canvas')
   public canvas!: ElementRef;
 
-  public constructor() { }
+  imageObj: any | undefined;
+  imageUrl: string | undefined;
+
+  public constructor(private uploadService: UploadService) { }
 
   public ngOnInit() { }
 
@@ -43,25 +47,28 @@ export class UploadComponent implements OnInit {
     let file = fileInputEvent.target.files[0];
     let reader = new FileReader();
 
-    //convert file (any file) to DataUrl
-    reader.readAsDataURL(file);
-    // make reference to the method so you can pass the reader results
-    let f = (file: any) => {
-      this.uploadToServer(file);
-    };
-    // after the reader is finished
-    reader.onload = () => {
-      // call the method reference
-      f(reader.result);
-    };
+    this.uploadToServer(file)
+    // //convert file (any file) to DataUrl
+    // reader.readAsDataURL(file);
+    // // make reference to the method so you can pass the reader results
+    // let f = (file: any) => {
+    //   this.uploadToServer(file);
+    // };
+    // // after the reader is finished
+    // reader.onload = () => {
+    //   // call the method reference
+    //   f(reader.result);
+    // };
   }
 
   uploadToServer(base64Image: any) {
-    // this.http
-    //   .post('http://localhost:5555/upload', { image: base64Image })
-    //   .subscribe((res) => {
-    //     console.log(res);
-    //   });
+    //this.uploadService.uploadImageToS3(base64Image)
+
+    const imageForm = new FormData();
+    imageForm.append('image', base64Image);
+    this.uploadService.imageUpload(imageForm).subscribe(res => {
+      console.log(res)
+    });
   }
 
 }

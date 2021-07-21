@@ -3,6 +3,7 @@ export const environment = {
   s3: {
     accessKeyId: '',
     secretAccessKey: '',
-    region: ''
+    region: '',
+    bucket: ''
   }
 };
